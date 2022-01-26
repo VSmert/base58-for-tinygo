@@ -6,23 +6,12 @@ import (
 
 // Encode encodes the passed bytes into a base58 encoded string.
 func Encode(bin []byte) string {
-	return FastBase58EncodingAlphabet(bin, DefaultAlphabet)
-}
-
-// EncodeAlphabet encodes the passed bytes into a base58 encoded string with the
-// passed alphabet.
-func EncodeAlphabet(bin []byte, alphabet *Alphabet) string {
-	return FastBase58EncodingAlphabet(bin, alphabet)
-}
-
-// FastBase58Encoding encodes the passed bytes into a base58 encoded string.
-func FastBase58Encoding(bin []byte) string {
-	return FastBase58EncodingAlphabet(bin, DefaultAlphabet)
+	return fastBase58EncodingAlphabet(bin, DefaultAlphabet)
 }
 
 // FastBase58EncodingAlphabet encodes the passed bytes into a base58 encoded
 // string with the passed alphabet.
-func FastBase58EncodingAlphabet(bin []byte, alphabet *Alphabet) string {
+func fastBase58EncodingAlphabet(bin []byte, alphabet *Alphabet) string {
 
 	size := len(bin)
 
@@ -70,22 +59,12 @@ func FastBase58EncodingAlphabet(bin []byte, alphabet *Alphabet) string {
 
 // Decode decodes the base58 encoded bytes.
 func Decode(str string) ([]byte, error) {
-	return FastBase58DecodingAlphabet(str, DefaultAlphabet)
+	return fastBase58DecodingAlphabet(str, DefaultAlphabet)
 }
 
-// DecodeAlphabet decodes the base58 encoded bytes using the given b58 alphabet.
-func DecodeAlphabet(str string, alphabet *Alphabet) ([]byte, error) {
-	return FastBase58DecodingAlphabet(str, alphabet)
-}
-
-// FastBase58Decoding decodes the base58 encoded bytes.
-func FastBase58Decoding(str string) ([]byte, error) {
-	return FastBase58DecodingAlphabet(str, DefaultAlphabet)
-}
-
-// FastBase58DecodingAlphabet decodes the base58 encoded bytes using the given
+// fastBase58DecodingAlphabet decodes the base58 encoded bytes using the given
 // b58 alphabet.
-func FastBase58DecodingAlphabet(str string, alphabet *Alphabet) ([]byte, error) {
+func fastBase58DecodingAlphabet(str string, alphabet *Alphabet) ([]byte, error) {
 	if len(str) == 0 {
 		return nil, errors.New("zero length string")
 	}

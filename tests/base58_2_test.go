@@ -18,11 +18,11 @@ func TestBase58_test2(t *testing.T) {
 	for ii, vv := range testAddr {
 		// num := Base58Decode([]byte(vv))
 		// chk := Base58Encode(num)
-		num, err := base58.FastBase58Decoding(vv)
+		num, err := base58.Decode(vv)
 		if err != nil {
 			t.Errorf("Test %d, expected success, got error %s\n", ii, err)
 		}
-		chk := base58.FastBase58Encoding(num)
+		chk := base58.Encode(num)
 		if vv != string(chk) {
 			t.Errorf("Test %d, expected=%s got=%s Address did base58 encode/decode correctly.", ii, vv, chk)
 		}
