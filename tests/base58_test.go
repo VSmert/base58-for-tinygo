@@ -6,6 +6,7 @@ import (
 	"time"
 
 	base58 "github.com/VSmert/base58-for-tinygo"
+	"github.com/stretchr/testify/require"
 )
 
 type testValues struct {
@@ -37,43 +38,23 @@ func initTestPairs() {
 var defaultDigits = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
 func TestInvalidAlphabetTooShort(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Errorf("Expected panic on alphabet being too short did not occur")
-		}
-	}()
-
-	_ = base58.NewAlphabet(defaultDigits[1:])
+	actualAlphabet := base58.NewAlphabet(defaultDigits[1:])
+	require.Nil(t, actualAlphabet)
 }
 
 func TestInvalidAlphabetTooLong(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Errorf("Expected panic on alphabet being too long did not occur")
-		}
-	}()
-
-	_ = base58.NewAlphabet("0" + defaultDigits)
+	actualAlphabet := base58.NewAlphabet("0" + defaultDigits)
+	require.Nil(t, actualAlphabet)
 }
 
 func TestInvalidAlphabetNon127(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Errorf("Expected panic on alphabet containing non-ascii chars did not occur")
-		}
-	}()
-
-	_ = base58.NewAlphabet("\xFF" + defaultDigits[1:])
+	actualAlphabet := base58.NewAlphabet("\xFF" + defaultDigits[1:])
+	require.Nil(t, actualAlphabet)
 }
 
 func TestInvalidAlphabetDup(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Errorf("Expected panic on alphabet containing duplicate chars did not occur")
-		}
-	}()
-
-	_ = base58.NewAlphabet("z" + defaultDigits[1:])
+	actualAlphabet := base58.NewAlphabet("z" + defaultDigits[1:])
+	require.Nil(t, actualAlphabet)
 }
 
 func BenchmarkFastBase58Encoding(b *testing.B) {
